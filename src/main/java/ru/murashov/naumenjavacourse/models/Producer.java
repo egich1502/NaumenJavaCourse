@@ -5,33 +5,29 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Table(name = "producer")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Producer {
 
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   @Id
   @Column(name = "id", nullable = false)
   private Integer id;
+
   @Basic
-  @Column(name = "name", nullable = true, length = 50)
+  @Column(name = "name", nullable = false, length = 50)
   private String name;
 
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
+  public Producer(String name){
     this.name = name;
   }
 

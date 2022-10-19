@@ -4,23 +4,21 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AllArgsConstructor;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "product")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Product {
 
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   @Id
   @Column(name = "id", nullable = false)
   private Integer id;
@@ -28,16 +26,16 @@ public class Product {
   @Column(name = "name", nullable = false, length = 50)
   private String name;
   @Basic
-  @Column(name = "price", nullable = true)
+  @Column(name = "price", nullable = false)
   private Integer price;
   @Basic
-  @Column(name = "description", nullable = true, length = 100)
+  @Column(name = "description", length = 100)
   private String description;
   @Basic
-  @Column(name = "producer_id", nullable = true)
+  @Column(name = "producer_id", nullable = false)
   private Integer producerId;
   @Basic
-  @Column(name = "category_id", nullable = true)
+  @Column(name = "category_id", nullable = false)
   private Integer categoryId;
 
 

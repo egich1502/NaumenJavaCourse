@@ -5,18 +5,21 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "category")
+@NoArgsConstructor
 public class Category {
 
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   @Id
   @Column(name = "id", nullable = false)
   private Integer id;
   @Basic
-  @Column(name = "name", nullable = true, length = 50)
+  @Column(name = "name", nullable = false, length = 50)
   private String name;
 
   public Integer getId() {

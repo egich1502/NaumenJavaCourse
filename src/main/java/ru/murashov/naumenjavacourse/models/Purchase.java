@@ -5,29 +5,28 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AllArgsConstructor;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "purchase")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Purchase {
 
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   @Id
   @Column(name = "id", nullable = false)
   private Integer id;
   @Basic
-  @Column(name = "user_id", nullable = true)
+  @Column(name = "user_id", nullable = false)
   private Integer userId;
   @Basic
-  @Column(name = "product_id", nullable = true)
+  @Column(name = "product_id", nullable = false)
   private Integer productId;
 
 
