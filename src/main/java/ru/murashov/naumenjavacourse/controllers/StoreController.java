@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.murashov.naumenjavacourse.models.Producer;
-import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.services.ShopService;
 
 @RestController

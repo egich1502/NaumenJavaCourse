@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,12 +33,12 @@ public class Product {
   @Basic
   @Column(name = "description", length = 100)
   private String description;
-  @Basic
-  @Column(name = "producer_id", nullable = false)
-  private Integer producerId;
-  @Basic
-  @Column(name = "category_id", nullable = false)
-  private Integer categoryId;
+  @ManyToOne
+  @JoinColumn(name = "producer_id")
+  private Producer producer;
+  @ManyToOne
+  @JoinColumn(name = "category_id")
+  private Category category;
 
 
   @Override
@@ -48,14 +50,13 @@ public class Product {
       return false;
     }
     Product product = (Product) o;
-    return Objects.equals(id, product.id) && Objects.equals(name, product.name)
-        && Objects.equals(price, product.price) && Objects.equals(description,
-        product.description) && Objects.equals(producerId, product.producerId)
-        && Objects.equals(categoryId, product.categoryId);
+    return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(
+        price, product.price) && Objects.equals(description, product.description) && Objects.equals(
+        producer, product.producer) && Objects.equals(category, product.category);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, price, description, producerId, categoryId);
+    return Objects.hash(id, name, price, description, producer, category);
   }
 }
