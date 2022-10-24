@@ -26,6 +26,7 @@ public class RegistrationController {
   @PostMapping("/registration")
   public String addUser(User user, Model model) {
     try {
+      System.out.println(user);
       userService.addUser(user);
       return "redirect:/login";
     } catch (Exception e) {

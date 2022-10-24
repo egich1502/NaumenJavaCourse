@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get All Purchases</title>
+</head>
+<body>
+<div th:each="purchase : ${allPurchase}">
+    <a th:href="@{/purchase/{id}(id=${purchase.getId()})}" th:text="${purchase.getName()}">purchase_name</a>
+</div>
+</body>
+</html>
