@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get All Products</title>
+</head>
+<body>
+<div th:each="product : ${allProducts}">
+    <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}">product_name</a>
+</div>
+<form th:method="GET" th:action="@{/product/save}">
+    <input th:type="submit" value="add"/>
+</form>
+</body>
+</html>

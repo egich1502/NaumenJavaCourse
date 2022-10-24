@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get All Producers</title>
+</head>
+<body>
+<div th:each="producer : ${allProducers}">
+    <a th:href="@{/producer/{id}(id=${producer.getId()})}" th:text="${producer.getName()}">producer_name</a>
+</div>
+
+<form th:method="GET" th:action="{/producer/save}">
+    <input th:type="submit" value="add"/>
+</form>
+</body>
+</html>

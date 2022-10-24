@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+</head>
+<body>
+<p th:text="${category.getName()}">VALUE</p>
+
+<form th:method="DELETE" th:action="@{/category/delete/{id}(id=${category.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
+
+<form th:method="GET" th:action="@{/category/getAll}">
+    <input th:type="submit" value="back"/>
+</form>
+</body>
+</html>

@@ -8,12 +8,12 @@ import ru.murashov.naumenjavacourse.models.Producer;
 import ru.murashov.naumenjavacourse.repositories.ProducerRepository;
 
 @Service
-public class ShopService {
+public class ProducerService {
 
   private final ProducerRepository producerRepository;
 
   @Autowired
-  public ShopService(ProducerRepository producerRepository) {
+  public ProducerService(ProducerRepository producerRepository) {
     this.producerRepository = producerRepository;
   }
 
@@ -29,4 +29,18 @@ public class ShopService {
     return producers;
   }
 
+
+    public Producer getProducer(int id){
+      Producer producer = producerRepository.findById(id).get();
+      return producer;
+    }
+
+    public void deleteProducer(int id){
+      producerRepository.deleteById(id);
+    }
+
+    public void updateProducer(int id, Producer updatedProducer){
+      Producer producerToBeUpdated = producerRepository.findById(id).get();
+      producerToBeUpdated.setName(updatedProducer.getName());
+    }
 }

@@ -1,4 +1,4 @@
-package ru.murashov.naumenjavacourse.controllers;
+package ru.murashov.naumenjavacourse.config.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +26,7 @@ public class RegistrationController {
   @PostMapping("/registration")
   public String addUser(User user, Model model) {
     try {
+      System.out.println(user);
       userService.addUser(user);
       return "redirect:/login";
     } catch (Exception e) {

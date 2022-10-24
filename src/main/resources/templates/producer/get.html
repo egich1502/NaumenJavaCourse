@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Producer</title>
+</head>
+<body>
+<p th:text="${producer.getName()}">VALUE</p>
+
+<form th:method="DELETE" th:action="@{/producer/delete/{id}(id=${producer.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
+
+<form th:method="GET" th:action="@{/producer/getAll}">
+    <input th:type="submit" value="back"/>
+</form>
+</body>
+</html>

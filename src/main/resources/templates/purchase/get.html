@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase</title>
+</head>
+<body>
+<p th:text="${purchase.getName()}">VALUE</p>
+<p th:text="${purchase.getUser_id}">VALUE</p>
+<p th:text="${purchase.getProduct_id}">VALUE</p>
+
+<form th:method="GET" th:action="@{/purchase/getAll}">
+    <input th:type="submit" value="back"/>
+</form>
+</body>
+</html>
