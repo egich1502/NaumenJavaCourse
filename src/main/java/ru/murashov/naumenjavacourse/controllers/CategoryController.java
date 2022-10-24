@@ -12,34 +12,34 @@ import ru.murashov.naumenjavacourse.services.CategoryService;
 @Controller
 @RequestMapping("/category")
 public class CategoryController {
-    private final CategoryService categoryService;
 
-    @Autowired
+  private final CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
+  @Autowired
+  public CategoryController(CategoryService categoryService) {
+    this.categoryService = categoryService;
+  }
 
-    @GetMapping("/save")
-    public String saveCategory(){
-        return "/category/save";
-    }
+  @GetMapping("/save")
+  public String saveCategory() {
+    return "/category/save";
+  }
 
-    @PostMapping("/save")
-    public String saveCategory(String name){
-        categoryService.saveCategory(name);
-        return "redirect:/category/getAll";
-    }
+  @PostMapping("/save")
+  public String saveCategory(String name) {
+    categoryService.saveCategory(name);
+    return "redirect:/category/getAll";
+  }
 
-    @GetMapping("/{id}")
-    public String getCategory(@PathVariable("id") int id, Model model){
-        model.addAttribute("category", categoryService.getCategory(id));
-        return "/category/get";
-    }
+  @GetMapping("/{id}")
+  public String getCategory(@PathVariable("id") int id, Model model) {
+    model.addAttribute("category", categoryService.getCategory(id));
+    return "/category/get";
+  }
 
-    @GetMapping("/getAll")
-    public String getAllCategory(Model model){
-        model.addAttribute("allCategories", categoryService.getAllCategory());
-        return "/category/getAll";
-    }
+  @GetMapping("/getAll")
+  public String getAllCategory(Model model) {
+    model.addAttribute("allCategories", categoryService.getAllCategory());
+    return "/category/getAll";
+  }
 }
