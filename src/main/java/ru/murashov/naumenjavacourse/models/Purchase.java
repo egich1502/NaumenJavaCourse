@@ -1,11 +1,12 @@
 package ru.murashov.naumenjavacourse.models;
 
 import java.util.Objects;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +23,12 @@ public class Purchase {
   @Id
   @Column(name = "id", nullable = false)
   private Integer id;
-  @Basic
-  @Column(name = "user_id", nullable = false)
-  private Integer userId;
-  @Basic
-  @Column(name = "product_id", nullable = false)
-  private Integer productId;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+  @ManyToOne
+  @JoinColumn(name = "product_id")
+  private Product product;
 
 
   @Override
@@ -39,12 +40,12 @@ public class Purchase {
       return false;
     }
     Purchase purchase = (Purchase) o;
-    return Objects.equals(id, purchase.id) && Objects.equals(userId,
-        purchase.userId) && Objects.equals(productId, purchase.productId);
+    return Objects.equals(id, purchase.id) && Objects.equals(user,
+        purchase.user) && Objects.equals(product, purchase.product);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, userId, productId);
+    return Objects.hash(id, user, product);
   }
 }
