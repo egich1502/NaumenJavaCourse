@@ -1,4 +1,4 @@
-package ru.murashov.naumenjavacourse.config.controllers;
+package ru.murashov.naumenjavacourse.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
