@@ -1,5 +1,6 @@
 package ru.murashov.naumenjavacourse.services;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -44,6 +45,27 @@ public class UserService implements UserDetailsService {
     }
     user.setRole(Collections.singleton(Role.USER));
     userRepository.save(user);
+  }
+
+  public List<User> getAllUsers() {
+    List<User> users = new ArrayList<>();
+    userRepository.findAll().forEach(users::add);
+    return users;
+  }
+
+  public User getUserById(int id) {
+    return userRepository.findById(id).get();
+  }
+
+  public void updateUserRole(int id, User user) {
+    User userToBeUpdated = userRepository.findById(id).get();
+    userToBeUpdated.setRole(user.getRole()
+    );
+    userRepository.save(userToBeUpdated);
+  }
+
+  public void deleteUser(int id) {
+    userRepository.deleteById(id);
   }
 
 }

@@ -41,7 +41,7 @@ public class PurchaseController {
     return "purchase/get";
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/{id}/delete")
   public String deleteProducer(@PathVariable("id") int id) {
     purchaseService.deletePurchase(id);
     return "redirect:/purchase/getAll";
