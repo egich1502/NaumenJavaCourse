@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
 <head>
     <meta charset="UTF-8">
     <title>Producer</title>
@@ -8,7 +9,7 @@
 <p th:text="${producer.getName()}">VALUE</p>
 
 <form th:method="DELETE" th:action="@{/producer/delete/{id}(id=${producer.getId()})}">
-    <input type="submit" value="Delete"/>
+    <input type="submit" value="delete"/>
 </form>
 
 <form th:method="GET" th:action="@{/producer/getAll}">

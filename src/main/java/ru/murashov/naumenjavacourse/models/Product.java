@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,10 +29,13 @@ public class Product {
   @Column(name = "id", nullable = false)
   private Integer id;
   @Basic
-  @Column(name = "name", nullable = false, length = 50)
+  @Column(name = "name")
+  @NotEmpty(message = "Product name should not be empty")
+  @Size(min = 2, max = 50, message = "Product name should be between 2 and 50 characters")
   private String name;
   @Basic
   @Column(name = "price", nullable = false)
+  @Min(value = 0, message = "Price should be greater than 0")
   private Integer price;
   @Basic
   @Column(name = "description", length = 100)

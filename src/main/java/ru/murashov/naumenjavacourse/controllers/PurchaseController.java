@@ -20,7 +20,7 @@ public class PurchaseController {
 
   @GetMapping("/save")
   public String savePurchase() {
-    return "purchase/save";
+    return "/purchase/save";
   }
 
   @PostMapping("/save")
@@ -42,8 +42,20 @@ public class PurchaseController {
   }
 
   @DeleteMapping("/delete/{id}")
-  public String deleteProducer(@PathVariable("id") int id) {
+  public String deletePurchase(@PathVariable("id") int id) {
     purchaseService.deletePurchase(id);
+    return "redirect:/purchase/getAll";
+  }
+
+  @GetMapping("/edit/{id}")
+  public String editPurchase(@PathVariable("id") int id, Model model){
+    model.addAttribute(purchaseService.getPurchase(id));
+    return "/purchase/edit";
+  }
+
+  @PatchMapping("/edit/{id}")
+  public String editPurchase(@PathVariable("id") int id, @ModelAttribute("purchase") Purchase purchase){
+    purchaseService.updatePurchase(id, purchase);
     return "redirect:/purchase/getAll";
   }
 }

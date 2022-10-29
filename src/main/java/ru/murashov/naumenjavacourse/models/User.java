@@ -15,6 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,13 +34,19 @@ public class User {
   @Column(name = "id", nullable = false)
   private Integer id;
   @Basic
-  @Column(name = "username", nullable = false, length = 50)
+  @Column(name = "username")
+  @NotEmpty(message = "User name should not be empty")
+  @Size(min = 2, max = 50, message = "User name should be between 2 and 50 characters")
   private String username;
   @Basic
-  @Column(name = "login", nullable = false, length = 30)
+  @Column(name = "login")
+  @NotEmpty(message = "login should not be empty")
+  @Size(min = 2, max = 30, message = "Login should be between 2 and 30 characters")
   private String login;
   @Basic
-  @Column(name = "password", nullable = false, length = 30)
+  @Column(name = "password")
+  @NotEmpty(message = "Password should not be empty")
+  @Size(min = 2, max = 30, message = "Password should be between 2 and 30 characters")
   private String password;
   @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
   @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))

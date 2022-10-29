@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
 <head>
     <meta charset="UTF-8">
     <title>Product</title>
@@ -10,11 +11,11 @@
 <p th:text="${product.getDescription}">VALUE</p>
 
 <form th:mehtod="PATCH" th:action="@{/product/edit/{id}(id=${product.getId()})}">
-    <input type="submit" value="Edit"/>
+    <input type="submit" value="edit"/>
 </form>
 
 <form th:method="DELETE" th:action="@{/product/delete/{id}(id=${product.getId()})}">
-    <input type="submit" value="Delete"/>
+    <input type="submit" value="delete"/>
 </form>
 
 <form th:method="GET" th:action="@{/}">

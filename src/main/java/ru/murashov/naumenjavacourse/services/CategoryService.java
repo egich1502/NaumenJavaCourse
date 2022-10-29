@@ -18,9 +18,7 @@ public class CategoryService {
     this.categoryRepository = categoryRepository;
   }
 
-  public void saveCategory(String name) {
-    Category category = new Category();
-    category.setName(name);
+  public void saveCategory(Category category) {
     categoryRepository.save(category);
   }
 

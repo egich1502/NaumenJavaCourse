@@ -3,17 +3,14 @@ package ru.murashov.naumenjavacourse.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.services.ProductService;
 
+import javax.validation.Valid;
+
 @Controller
-@RequestMapping()
 public class ProductController {
 
   private final ProductService productService;
@@ -24,14 +21,18 @@ public class ProductController {
   }
 
   @GetMapping("/product/save")
-  public String saveProduct() {
+  public String saveProduct(@ModelAttribute("product") Product product) {
     return "product/save";
   }
 
   @PostMapping("/product/save")
-  public String saveProduct(@ModelAttribute("product") Product product) {
+  public String saveProduct(@ModelAttribute("product") @Valid Product product,
+                            BindingResult bindingResult) {
+    System.out.println(bindingResult);
+    if (bindingResult.hasErrors()){
+      return "/product/save";}
     productService.saveProduct(product);
-    return "redirect:/product/getAll";
+    return "redirect:/";
   }
 
   @GetMapping("")
@@ -46,6 +47,13 @@ public class ProductController {
     return "product/get";
   }
 
+  @DeleteMapping("/product/delete/{id}")
+  public String deleteProduct(@PathVariable("id") int id){
+    productService.deleteProduct(id);
+    return "redirect:/";
+  }
+
+
   @GetMapping("/product/edit/{id}")
   public String editProduct(@PathVariable("id") int id, Model model) {
     model.addAttribute("product", productService.getProduct(id));
@@ -53,8 +61,10 @@ public class ProductController {
   }
 
   @PatchMapping("/product/edit/{id}")
-  public String updateProduct(@PathVariable("id") int id,
-      @ModelAttribute("product") Product product) {
+  public String updateProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
+                              @PathVariable("id") int id) {
+    if (bindingResult.hasErrors())
+      return "/product/edit";
     productService.updateProduct(id, product);
     return "redirect:/product/{id}";
   }

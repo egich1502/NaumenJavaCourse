@@ -23,14 +23,17 @@ public class ProductService {
   }
 
   public List<Product> getAllProducts() {
-    List<Product> products = new ArrayList<>();
+    List<Product> products = new ArrayList<Product>();
     productRepository.findAll().forEach(products::add);
     return products;
   }
 
-
   public Product getProduct(int id) {
     return productRepository.findById(id).get();
+  }
+
+  public void deleteProduct(int id){
+    productRepository.deleteById(id);
   }
 
   public void updateProduct(int id, Product updatedProduct) {

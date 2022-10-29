@@ -1,8 +1,6 @@
 package ru.murashov.naumenjavacourse.services;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -46,4 +44,26 @@ public class UserService implements UserDetailsService {
     userRepository.save(user);
   }
 
+  public User getUser(int id){
+    return userRepository.findById(id).get();
+  }
+
+  public List<User> getAllUsers(){
+    List<User> users = new ArrayList<User>();
+    userRepository.findAll().forEach(users::add);
+    return users;
+  }
+
+  public void deleteUser(int id){
+    userRepository.deleteById(id);
+  }
+
+  public void updateUser(int id, User updatedUser){
+    User userToBeUpdated = userRepository.findById(id).get();
+    userToBeUpdated.setPassword(updatedUser.getPassword());
+    userToBeUpdated.setLogin(updatedUser.getLogin());
+    userToBeUpdated.setUsername(updatedUser.getUsername());
+    userRepository.save(userToBeUpdated);
+
+  }
 }

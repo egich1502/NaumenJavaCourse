@@ -17,8 +17,8 @@ public class ProducerService {
     this.producerRepository = producerRepository;
   }
 
-  public void saveProducer(String name) {
-    producerRepository.save(new Producer(name));
+  public void saveProducer(Producer producer) {
+    producerRepository.save(producer);
   }
 
   public List<Producer> getAllProducers() {

@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+            xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
 <head>
     <title>Add product</title>
 </head>
 <body>
-<form th:action="@{/}" method="post">
-   <div><label> Product Name : <input type="text" name="name"/> </label></div>
-    <div><label> Product Category id : <input type="number" name="categoryId"/> </label></div>
-    <div><label> Product Description : <input type="text" name="description"/> </label></div>
-    <div><label> Product Price : <input type="number" name="price"/> </label></div>
-    <div><label> Product Producer id : <input type="number" name="producerId"/> </label></div>
-    <div><input type="submit" value="Add"/></div>
+<form th:action="@{/product/save}" th:method="post" th:object="${product}">
+   <label for="name">Product name:</label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <br/>
+    <label for="price">Product Price:</label>
+    <input type="number" th:field="*{price}" id="price"/>
+    <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</div>
+    <br/>
+    <label for="category">Product category:</label>
+    <input type="text" th:field="*{category}" id="category"/>
+    <br/>
+    <label for="producer">Product producer:</label>
+    <input type="text" th:field="*{producer}" id="producer"/>
+    <br/>
+    <label for="description">Product Description:</label>
+    <input type="text" th:field="*{description}" id="description"/>
+
+    <div><input type="submit" value="add"/></div>
 </form>
 </body>
 </html>

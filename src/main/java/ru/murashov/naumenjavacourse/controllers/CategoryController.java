@@ -3,11 +3,12 @@ package ru.murashov.naumenjavacourse.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import ru.murashov.naumenjavacourse.models.Category;
 import ru.murashov.naumenjavacourse.services.CategoryService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/category")
@@ -21,13 +22,15 @@ public class CategoryController {
   }
 
   @GetMapping("/save")
-  public String saveCategory() {
+  public String saveCategory(@ModelAttribute("category") Category category) {
     return "/category/save";
   }
 
   @PostMapping("/save")
-  public String saveCategory(String name) {
-    categoryService.saveCategory(name);
+  public String saveCategory(@ModelAttribute("category") @Valid Category category, BindingResult bindingResult) {
+    if (bindingResult.hasErrors())
+      return "category/getAll";
+    categoryService.saveCategory(category);
     return "redirect:/category/getAll";
   }
 
@@ -41,5 +44,26 @@ public class CategoryController {
   public String getAllCategory(Model model) {
     model.addAttribute("allCategories", categoryService.getAllCategory());
     return "/category/getAll";
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public String deleteCategory(@PathVariable("id") int id){
+    categoryService.deleteCategory(id);
+    return "redirect:/category/getAll";
+  }
+
+  @GetMapping("/edit/{id}")
+    public String editCategory(@PathVariable("id") int id, Model model){
+    model.addAttribute("category", categoryService.getCategory(id));
+    return "/category/edit";
+  }
+
+  @PatchMapping("/edit/{id}")
+  public String editCategory(@ModelAttribute("category") @Valid Category category, BindingResult bindingResult,
+                             @PathVariable("id") int id){
+    if (bindingResult.hasErrors())
+      return "category/edit";
+    categoryService.updateCategory(id, category);
+    return "redirect:/category/{id}";
   }
 }

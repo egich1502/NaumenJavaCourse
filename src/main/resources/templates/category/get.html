@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
 <head>
     <meta charset="UTF-8">
     <title>Category</title>
@@ -7,8 +8,12 @@
 <body>
 <p th:text="${category.getName()}">VALUE</p>
 
+<form th:method="get" th:action="@{/category/edit/{id}(id=${category.getId()})}">
+    <input type="submit" value="update"/>
+</form>
+
 <form th:method="DELETE" th:action="@{/category/delete/{id}(id=${category.getId()})}">
-    <input type="submit" value="Delete"/>
+    <input type="submit" value="delete"/>
 </form>
 
 <form th:method="GET" th:action="@{/category/getAll}">

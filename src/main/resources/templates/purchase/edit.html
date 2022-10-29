@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
+<head>
+    <meta charset="UTF-8">
+    <title>Update purchase</title>
+</head>
+<body>
+<form th:method="patch" th:action="@{/purchase/edit/{id}(id=${purchase.getId()})}" th:object="${purchase}">
+    <label for="id">Enter id:</label>
+    <input type="number" th:field="id" id="id"/>
+    <br/>
+    <label for="user">Enter user:</label>
+    <input type="text" th:field="user" id="user">
+    <br/>
+    <label for="product">Enter product:</label>
+    <input type="text" th:field="product" id="product">
+    <br/>
+    <input type="submit" value="update"/>
+</form>
+</body>
+</html>

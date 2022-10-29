@@ -36,4 +36,11 @@ public class PurchaseService {
   public void deletePurchase(int id) {
     purchaseRepository.deleteById(id);
   }
+
+  public void updatePurchase(int id, Purchase updatedPurchase){
+    Purchase purchaseToBeUpdated = purchaseRepository.findById(id).get();
+    purchaseToBeUpdated.setUser(updatedPurchase.getUser());
+    purchaseToBeUpdated.setProduct(updatedPurchase.getProduct());
+    purchaseRepository.save(purchaseToBeUpdated);
+  }
 }

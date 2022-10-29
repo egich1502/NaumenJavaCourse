@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
 <head>
     <meta charset="UTF-8">
     <title>User</title>
 </head>
 <body>
-<p th:text="${user.getName()}">VALUE</p>
+<p th:text="${user.getUsername()}">VALUE</p>
 
 <form th:mehtod="PATCH" th:action="@{/user/edit/{id}(id=${user.getId()})}">
-    <input type="submit" value="Edit"/>
+    <input type="submit" value="update"/>
 </form>
 
 <form th:method="DELETE" th:action="@{/user/delete/{id}(id=${user.getId()})}">
-    <input type="submit" value="Delete"/>
+    <input type="submit" value="delete"/>
 </form>
 
 <form th:metod="GET" th:action="@{/user/getAll}">
