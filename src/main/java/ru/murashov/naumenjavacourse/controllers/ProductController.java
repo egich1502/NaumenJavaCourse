@@ -1,6 +1,7 @@
 package ru.murashov.naumenjavacourse.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +15,7 @@ import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.services.ProductService;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("product")
 public class ProductController {
 
   private final ProductService productService;
@@ -24,42 +25,47 @@ public class ProductController {
     this.productService = productService;
   }
 
-  @GetMapping("/save")
+  @Secured("ROLE_ADMIN")
+  @GetMapping("save")
   public String saveProduct() {
     return "product/save";
   }
 
-  @PostMapping("/save")
+  @Secured("ROLE_ADMIN")
+  @PostMapping("save")
   public String saveProduct(@ModelAttribute("product") Product product) {
     productService.saveProduct(product);
     return "redirect:/product/getAll";
   }
 
-  @GetMapping("/getAll")
+  @GetMapping("getAll")
   public String getAllProducts(Model model) {
     model.addAttribute("allProducts", productService.getAllProducts());
     return "product/getAll";
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("{id}")
   public String getProduct(@PathVariable("id") int id, Model model) {
     model.addAttribute("product", productService.getProduct(id));
     return "product/get";
   }
 
-  @GetMapping("/{id}/edit")
+  @Secured("ROLE_ADMIN")
+  @GetMapping("{id}/edit")
   public String editProduct(@PathVariable("id") int id, Model model) {
     model.addAttribute("product", productService.getProduct(id));
     return "/product/edit";
   }
 
-  @PatchMapping("/{id}/edit")
+  @Secured("ROLE_ADMIN")
+  @PatchMapping("{id}/edit")
   public String updateProduct(@PathVariable("id") int id,
       @ModelAttribute("product") Product product) {
     productService.updateProduct(id, product);
     return "redirect:/product/{id}";
   }
 
+  @Secured("ROLE_ADMIN")
   @DeleteMapping("/{id}/delete")
   public String deleteProduct(@PathVariable("id") int id) {
     productService.deleteProduct(id);

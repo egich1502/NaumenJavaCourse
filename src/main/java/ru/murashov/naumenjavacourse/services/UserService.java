@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.murashov.naumenjavacourse.models.Role;
 import ru.murashov.naumenjavacourse.models.User;
@@ -20,6 +21,7 @@ import ru.murashov.naumenjavacourse.repositories.UserRepository;
 public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
+  private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
   @Autowired
   public UserService(UserRepository userRepository) {
@@ -44,6 +46,7 @@ public class UserService implements UserDetailsService {
       throw new Exception("user Exist");
     }
     user.setRole(Collections.singleton(Role.USER));
+    user.setPassword(encoder.encode(user.getPassword()));
     userRepository.save(user);
   }
 
