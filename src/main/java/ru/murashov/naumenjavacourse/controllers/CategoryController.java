@@ -1,6 +1,7 @@
 package ru.murashov.naumenjavacourse.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.murashov.naumenjavacourse.services.CategoryService;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("category")
 public class CategoryController {
 
   private final CategoryService categoryService;
@@ -20,24 +21,26 @@ public class CategoryController {
     this.categoryService = categoryService;
   }
 
-  @GetMapping("/save")
+  @Secured("ROLE_ADMIN")
+  @GetMapping("save")
   public String saveCategory() {
     return "/category/save";
   }
 
-  @PostMapping("/save")
+  @Secured("ROLE_ADMIN")
+  @PostMapping("save")
   public String saveCategory(String name) {
     categoryService.saveCategory(name);
     return "redirect:/category/getAll";
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("{id}")
   public String getCategory(@PathVariable("id") int id, Model model) {
     model.addAttribute("category", categoryService.getCategory(id));
     return "/category/get";
   }
 
-  @GetMapping("/getAll")
+  @GetMapping("getAll")
   public String getAllCategory(Model model) {
     model.addAttribute("allCategories", categoryService.getAllCategory());
     return "/category/getAll";

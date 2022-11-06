@@ -6,11 +6,8 @@
 </head>
 <body>
 <div th:each="user : ${allUsers}">
-    <a th:href="@{/user/{id}(id=${user.getId()})}" th:text="${user.getName()}">user_name</a>
+    <a th:href="@{/user/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">user_name</a>
 </div>
 
-<form th:method="GET" th:action="@{/user/save}">
-    <input th:type="submit" value="add"/>
-</form>
 </body>
 </html>

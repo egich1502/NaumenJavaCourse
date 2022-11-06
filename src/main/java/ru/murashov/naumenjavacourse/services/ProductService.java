@@ -40,4 +40,8 @@ public class ProductService {
     productToBeUpdate.setDescription(updatedProduct.getDescription());
     productRepository.save(productToBeUpdate);
   }
+
+  public void deleteProduct(int id) {
+    productRepository.deleteById(id);
+  }
 }

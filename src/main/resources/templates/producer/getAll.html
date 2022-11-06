@@ -9,7 +9,7 @@
     <a th:href="@{/producer/{id}(id=${producer.getId()})}" th:text="${producer.getName()}">producer_name</a>
 </div>
 
-<form th:method="GET" th:action="{/producer/save}">
+<form th:method="GET" th:action="@{/producer/save}">
     <input th:type="submit" value="add"/>
 </form>
 </body>
