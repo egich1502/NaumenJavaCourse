@@ -10,35 +10,38 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
 
-    @Autowired
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+  private final ProductRepository productRepository;
 
-    public Product saveProduct(Product product) {
-        productRepository.save(product);
-        return product;
-    }
+  @Autowired
+  public ProductService(ProductRepository productRepository) {
+    this.productRepository = productRepository;
+  }
 
-    public List<Product> getAllProducts() {
-        List<Product> products = new ArrayList<>();
-        productRepository.findAll().forEach(products::add);
-        return products;
-    }
+  public void saveProduct(Product product) {
+    productRepository.save(product);
+  }
+
+  public List<Product> getAllProducts() {
+    List<Product> products = new ArrayList<>();
+    productRepository.findAll().forEach(products::add);
+    return products;
+  }
 
 
-    public Product getProduct(int id){
-        Product product = productRepository.findById(id).get();
-        return product;
-    }
+  public Product getProduct(int id) {
+    return productRepository.findById(id).get();
+  }
 
-    public void updateProduct(int id, Product updatedProduct){
-        Product productToBeUpdate = productRepository.findById(id).get();
-        productToBeUpdate.setName(updatedProduct.getName());
-        productToBeUpdate.setPrice(updatedProduct.getPrice());
-        productToBeUpdate.setDescription(updatedProduct.getDescription());
+  public void updateProduct(int id, Product updatedProduct) {
+    Product productToBeUpdate = productRepository.findById(id).get();
+    productToBeUpdate.setName(updatedProduct.getName());
+    productToBeUpdate.setPrice(updatedProduct.getPrice());
+    productToBeUpdate.setDescription(updatedProduct.getDescription());
+    productRepository.save(productToBeUpdate);
+  }
 
-    }
+  public void deleteProduct(int id) {
+    productRepository.deleteById(id);
+  }
 }

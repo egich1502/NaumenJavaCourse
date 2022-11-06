@@ -17,10 +17,8 @@ public class ProducerService {
     this.producerRepository = producerRepository;
   }
 
-  public Producer saveProducer(String name) {
-    Producer producer = new Producer(name);
-    producerRepository.save(producer);
-    return producer;
+  public void saveProducer(String name) {
+    producerRepository.save(new Producer(name));
   }
 
   public List<Producer> getAllProducers() {
@@ -29,18 +27,17 @@ public class ProducerService {
     return producers;
   }
 
+  public Producer getProducer(int id) {
+    return producerRepository.findById(id).get();
+  }
 
-    public Producer getProducer(int id){
-      Producer producer = producerRepository.findById(id).get();
-      return producer;
-    }
+  public void deleteProducer(int id) {
+    producerRepository.deleteById(id);
+  }
 
-    public void deleteProducer(int id){
-      producerRepository.deleteById(id);
-    }
-
-    public void updateProducer(int id, Producer updatedProducer){
-      Producer producerToBeUpdated = producerRepository.findById(id).get();
-      producerToBeUpdated.setName(updatedProducer.getName());
-    }
+  public void updateProducer(int id, Producer updatedProducer) {
+    Producer producerToBeUpdated = producerRepository.findById(id).get();
+    producerToBeUpdated.setName(updatedProducer.getName());
+    producerRepository.save(producerToBeUpdated);
+  }
 }

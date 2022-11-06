@@ -27,7 +27,7 @@ public class Producer {
   @Column(name = "name", nullable = false, length = 50)
   private String name;
 
-  public Producer(String name){
+  public Producer(String name) {
     this.name = name;
   }
 
@@ -50,8 +50,6 @@ public class Producer {
 
   @Override
   public String toString() {
-    return "Producer{" +
-            "name='" + name + '\'' +
-            '}';
+    return "Producer{" + "name='" + name + '\'' + '}';
   }
 }
