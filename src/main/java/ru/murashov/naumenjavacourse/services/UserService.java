@@ -1,6 +1,5 @@
 package ru.murashov.naumenjavacourse.services;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.murashov.naumenjavacourse.models.Role;
 import ru.murashov.naumenjavacourse.models.User;
@@ -21,7 +19,6 @@ import ru.murashov.naumenjavacourse.repositories.UserRepository;
 public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
-  private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
   @Autowired
   public UserService(UserRepository userRepository) {
@@ -46,29 +43,7 @@ public class UserService implements UserDetailsService {
       throw new Exception("user Exist");
     }
     user.setRole(Collections.singleton(Role.USER));
-    user.setPassword(encoder.encode(user.getPassword()));
     userRepository.save(user);
-  }
-
-  public List<User> getAllUsers() {
-    List<User> users = new ArrayList<>();
-    userRepository.findAll().forEach(users::add);
-    return users;
-  }
-
-  public User getUserById(int id) {
-    return userRepository.findById(id).get();
-  }
-
-  public void updateUserRole(int id, User user) {
-    User userToBeUpdated = userRepository.findById(id).get();
-    userToBeUpdated.setRole(user.getRole()
-    );
-    userRepository.save(userToBeUpdated);
-  }
-
-  public void deleteUser(int id) {
-    userRepository.deleteById(id);
   }
 
 }

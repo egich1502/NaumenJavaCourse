@@ -40,8 +40,8 @@ public class Purchase {
       return false;
     }
     Purchase purchase = (Purchase) o;
-    return Objects.equals(id, purchase.id) && Objects.equals(user, purchase.user) && Objects.equals(
-        product, purchase.product);
+    return Objects.equals(id, purchase.id) && Objects.equals(user,
+        purchase.user) && Objects.equals(product, purchase.product);
   }
 
   @Override

@@ -5,7 +5,7 @@
     <title>Edit Product</title>
 </head>
 <body>
-  <form th:action="@{/product/{id}/edit(id=${product.getId()})}" th:method="PATCH" th:object="${product}">
+  <form th:action="@{/product/edit/{id}(id=${product.getId()})}" th:method="PATCH" th:object="${product}">
       <label for="name">Enter name:</label>
       <input type="text" th:field="*{name}" id="name"/>
         <br/>

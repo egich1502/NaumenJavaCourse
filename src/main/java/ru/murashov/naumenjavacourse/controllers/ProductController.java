@@ -1,74 +1,53 @@
 package ru.murashov.naumenjavacourse.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.services.ProductService;
 
 @Controller
-@RequestMapping("product")
+@RequestMapping()
 public class ProductController {
+    private final ProductService productService;
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
-  private final ProductService productService;
+    @GetMapping("/product/save")
+    public String saveProduct() {
+        return "product/save";
+    }
 
-  @Autowired
-  public ProductController(ProductService productService) {
-    this.productService = productService;
-  }
+    @PostMapping("/product/save")
+    public String saveProduct(@ModelAttribute("product") Product product){
+        productService.saveProduct(product);
+        return "redirect:/product/getAll";
+    }
 
-  @Secured("ROLE_ADMIN")
-  @GetMapping("save")
-  public String saveProduct() {
-    return "product/save";
-  }
+    @GetMapping()
+    public String getAllProducts(Model model) {
+        model.addAttribute("allProducts", productService.getAllProducts());
+        return "product/getAll";
+    }
 
-  @Secured("ROLE_ADMIN")
-  @PostMapping("save")
-  public String saveProduct(@ModelAttribute("product") Product product) {
-    productService.saveProduct(product);
-    return "redirect:/product/getAll";
-  }
+    @GetMapping("/product/{id}")
+    public String getProduct(@PathVariable("id") int id, Model model){
+        model.addAttribute("product", productService.getProduct(id));
+        return "product/get";
+    }
 
-  @GetMapping("getAll")
-  public String getAllProducts(Model model) {
-    model.addAttribute("allProducts", productService.getAllProducts());
-    return "product/getAll";
-  }
+    @GetMapping("/product/edit/{id}")
+    public String editProduct(@PathVariable("id") int id, Model model){
+        model.addAttribute("product", productService.getProduct(id));
+        return "/product/edit";
+    }
 
-  @GetMapping("{id}")
-  public String getProduct(@PathVariable("id") int id, Model model) {
-    model.addAttribute("product", productService.getProduct(id));
-    return "product/get";
-  }
-
-  @Secured("ROLE_ADMIN")
-  @GetMapping("{id}/edit")
-  public String editProduct(@PathVariable("id") int id, Model model) {
-    model.addAttribute("product", productService.getProduct(id));
-    return "/product/edit";
-  }
-
-  @Secured("ROLE_ADMIN")
-  @PatchMapping("{id}/edit")
-  public String updateProduct(@PathVariable("id") int id,
-      @ModelAttribute("product") Product product) {
-    productService.updateProduct(id, product);
-    return "redirect:/product/{id}";
-  }
-
-  @Secured("ROLE_ADMIN")
-  @DeleteMapping("/{id}/delete")
-  public String deleteProduct(@PathVariable("id") int id) {
-    productService.deleteProduct(id);
-    return "redirect:/product/getAll";
-  }
+    @PatchMapping("/product/edit/{id}")
+    public String updateProduct(@PathVariable("id") int id, @ModelAttribute("product") Product product){
+        productService.updateProduct(id, product);
+        return "redirect:/product/{id}";
+    }
 }
