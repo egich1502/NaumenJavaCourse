@@ -9,15 +9,15 @@
 <p th:text="${product.getPrice()}">VALUE</p>
 <p th:text="${product.getDescription}">VALUE</p>
 
-<form th:mehtod="PATCH" th:action="@{/product/{id}/edit(id=${product.getId()})}">
+<form th:mehtod="PATCH" th:action="@{/product/edit/{id}(id=${product.getId()})}">
     <input type="submit" value="Edit"/>
 </form>
 
-<form th:method="DELETE" th:action="@{/product/{id}/delete(id=${product.getId()})}">
+<form th:method="DELETE" th:action="@{/product/delete/{id}(id=${product.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
 
-<form th:method="GET" th:action="@{/product/getAll}">
+<form th:method="GET" th:action="@{/}">
     <input th:type="submit" value="back"/>
 </form>
 </body>
