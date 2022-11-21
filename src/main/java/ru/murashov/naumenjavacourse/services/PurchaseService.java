@@ -3,6 +3,7 @@ package ru.murashov.naumenjavacourse.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.murashov.naumenjavacourse.models.Purchase;
+import ru.murashov.naumenjavacourse.models.User;
 import ru.murashov.naumenjavacourse.repositories.PurchaseRepository;
 
 import java.util.ArrayList;
@@ -35,5 +36,9 @@ public class PurchaseService {
 
   public void deletePurchase(int id) {
     purchaseRepository.deleteById(id);
+  }
+
+  public List<Purchase> getAllPurchasesByUser(User user){
+    return purchaseRepository.findAllByUser(user);
   }
 }

@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,7 +43,7 @@ public class UserService implements UserDetailsService {
   }
 
   public void addUser(User user) throws Exception {
-    User userFromDB = userRepository.findByLogin(user.getUsername());
+    User userFromDB = userRepository.findByLogin(user.getLogin());
     if (userFromDB != null) {
       throw new Exception("user Exist");
     }
@@ -65,6 +67,12 @@ public class UserService implements UserDetailsService {
     userToBeUpdated.setRole(user.getRole()
     );
     userRepository.save(userToBeUpdated);
+  }
+
+  public User getAuthenticatedUser() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String currentUser = auth.getName();
+    return userRepository.findByUsername(currentUser);
   }
 
   public void deleteUser(int id) {
