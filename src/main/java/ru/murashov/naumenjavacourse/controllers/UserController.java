@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.murashov.naumenjavacourse.models.Role;
 import ru.murashov.naumenjavacourse.models.User;
+import ru.murashov.naumenjavacourse.services.PurchaseService;
 import ru.murashov.naumenjavacourse.services.UserService;
 
 @Controller
@@ -21,10 +22,12 @@ import ru.murashov.naumenjavacourse.services.UserService;
 public class UserController {
 
   private final UserService userService;
+  private final PurchaseService purchaseService;
 
   @Autowired
-  public UserController(UserService userService) {
+  public UserController(UserService userService, PurchaseService purchaseService) {
     this.userService = userService;
+    this.purchaseService = purchaseService;
   }
 
   @GetMapping("getAll")
@@ -59,6 +62,14 @@ public class UserController {
   public String deleteUser(@PathVariable("id") int id) {
     userService.deleteUser(id);
     return "redirect:/user/getAll";
+  }
+
+  @GetMapping("profile")
+  public String getUserProfile(Model model) {
+    User user = userService.getAuthenticatedUser();
+    model.addAttribute("user", user);
+    model.addAttribute("AllPurchases", purchaseService.getAllPurchasesByUser(user));
+    return "user/personalPage";
   }
 
   @ModelAttribute("roles")
