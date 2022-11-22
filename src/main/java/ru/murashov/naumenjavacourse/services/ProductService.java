@@ -2,6 +2,8 @@ package ru.murashov.naumenjavacourse.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.murashov.naumenjavacourse.models.Category;
+import ru.murashov.naumenjavacourse.models.Producer;
 import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.repositories.ProductRepository;
 
@@ -43,5 +45,13 @@ public class ProductService {
 
   public void deleteProduct(int id) {
     productRepository.deleteById(id);
+  }
+
+  public List<Product> getAllProductsByCategory(Category category) {
+    return productRepository.findAllByCategory(category);
+  }
+
+  public List<Product> getAllProductsByProducer(Producer producer) {
+    return productRepository.findAllByProducer(producer);
   }
 }
