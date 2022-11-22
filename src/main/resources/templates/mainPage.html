@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>Главная страница</h1>
+<div th:switch="${user == null}">
+  <div th:case="${true}">
+    <a th:href="@{/login}">Вход</a>
+    <a th:href="@{/registration}">Регистрация</a>
+  </div>
+  <a th:case="${false}" th:href="@{/user/profile}">Профиль</a>
+</div>
+<a th:href="@{/category/getAll}">Категории</a>
+<a th:href="@{/producer/getAll}">Производители</a>
+</body>
+</html>
