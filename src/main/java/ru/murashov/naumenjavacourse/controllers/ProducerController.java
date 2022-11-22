@@ -13,16 +13,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.murashov.naumenjavacourse.models.Producer;
 import ru.murashov.naumenjavacourse.services.ProducerService;
+import ru.murashov.naumenjavacourse.services.ProductService;
 
 @Controller
 @RequestMapping("producer")
 public class ProducerController {
 
   private final ProducerService producerService;
+  private final ProductService productService;
 
   @Autowired
-  public ProducerController(ProducerService producerService) {
+  public ProducerController(ProducerService producerService, ProductService productService) {
     this.producerService = producerService;
+    this.productService = productService;
   }
 
   @Secured("ROLE_ADMIN")
@@ -46,7 +49,9 @@ public class ProducerController {
 
   @GetMapping("{id}")
   public String getProducer(@PathVariable("id") int id, Model model) {
-    model.addAttribute("producer", producerService.getProducer(id));
+    Producer producer = producerService.getProducer(id);
+    model.addAttribute("producer", producer);
+    model.addAttribute("producerProducts", productService.getAllProductsByProducer(producer));
     return "producer/get";
   }
 

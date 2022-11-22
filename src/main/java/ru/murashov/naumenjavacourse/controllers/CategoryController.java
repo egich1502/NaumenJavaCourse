@@ -8,17 +8,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.murashov.naumenjavacourse.models.Category;
 import ru.murashov.naumenjavacourse.services.CategoryService;
+import ru.murashov.naumenjavacourse.services.ProductService;
 
 @Controller
 @RequestMapping("category")
 public class CategoryController {
 
   private final CategoryService categoryService;
+  private final ProductService productService;
 
   @Autowired
-  public CategoryController(CategoryService categoryService) {
+  public CategoryController(CategoryService categoryService, ProductService productService) {
     this.categoryService = categoryService;
+    this.productService = productService;
   }
 
   @Secured("ROLE_ADMIN")
@@ -36,7 +40,9 @@ public class CategoryController {
 
   @GetMapping("{id}")
   public String getCategory(@PathVariable("id") int id, Model model) {
-    model.addAttribute("category", categoryService.getCategory(id));
+    Category category = categoryService.getCategory(id);
+    model.addAttribute("category", category);
+    model.addAttribute("categoryProducts", productService.getAllProductsByCategory(category));
     return "/category/get";
   }
 
