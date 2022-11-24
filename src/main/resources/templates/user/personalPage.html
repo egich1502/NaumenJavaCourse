@@ -5,12 +5,14 @@
   <title>Title</title>
 </head>
 <body>
-<p th:text="${user.getUsername()}">VALUE</p>
-<p th:text="${user.getRole()}">VALUE</p>
+<h3>Имя пользователя</h3><p th:text="${user.getUsername()}">VALUE</p>
+<h3>роль</h3><p th:text="${user.getRole()}">VALUE</p>
 
-<div th:each="purchase: ${allPurchases}">
-  <p th:text="${purchase.getProduct()}">VALUE</p>
-
+<h2>Купленные товары</h2>
+<ul>
+<div th:each="purchase: ${AllPurchases}">
+  <li><p th:text="${purchase.getProduct().getName()}">VALUE</p></li>
 </div>
+</ul>
 </body>
 </html>

@@ -81,6 +81,7 @@ public class ProductController {
     return "redirect:/product/getAll";
   }
 
+  @Secured("ROLE_USER")
   @PostMapping("/{id}/buy")
   public String buyProduct(@PathVariable("id") int id){
     User user = userService.getAuthenticatedUser();
