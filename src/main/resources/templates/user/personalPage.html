@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
@@ -9,10 +9,10 @@
 <h3>роль</h3><p th:text="${user.getRole()}">VALUE</p>
 
 <h2>Купленные товары</h2>
-<ul>
-<div th:each="purchase: ${AllPurchases}">
-  <li><p th:text="${purchase.getProduct().getName()}">VALUE</p></li>
+
+<div th:each="purchase: ${allPurchases}">
+  <a th:href="@{/product/{id}(id=${purchase.getProduct().getId()})}" th:text="${purchase.getProduct().getName()}">VALUE</a>
 </div>
-</ul>
+
 </body>
 </html>

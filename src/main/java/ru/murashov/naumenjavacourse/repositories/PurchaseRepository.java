@@ -8,6 +8,7 @@ import ru.murashov.naumenjavacourse.models.User;
 
 @Repository
 public interface PurchaseRepository extends CrudRepository<Purchase, Integer> {
+
   List<Purchase> findAllByUser(User user);
 
 }

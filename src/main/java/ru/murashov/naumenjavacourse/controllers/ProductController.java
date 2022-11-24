@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.murashov.naumenjavacourse.models.Product;
-import ru.murashov.naumenjavacourse.models.Purchase;
-import ru.murashov.naumenjavacourse.models.User;
 import ru.murashov.naumenjavacourse.services.ProductService;
-import ru.murashov.naumenjavacourse.services.PurchaseService;
 import ru.murashov.naumenjavacourse.services.UserService;
 
 @Controller
@@ -23,14 +20,12 @@ import ru.murashov.naumenjavacourse.services.UserService;
 public class ProductController {
 
   private final ProductService productService;
-  private final PurchaseService purchaseService;
   private final UserService userService;
 
 
   @Autowired
-  public ProductController(ProductService productService, PurchaseService purchaseService, UserService userService) {
+  public ProductController(ProductService productService, UserService userService) {
     this.productService = productService;
-    this.purchaseService = purchaseService;
     this.userService = userService;
   }
 
@@ -63,7 +58,7 @@ public class ProductController {
   @GetMapping("{id}/edit")
   public String editProduct(@PathVariable("id") int id, Model model) {
     model.addAttribute("product", productService.getProduct(id));
-    return "/product/edit";
+    return "product/edit";
   }
 
   @Secured("ROLE_ADMIN")
@@ -81,14 +76,10 @@ public class ProductController {
     return "redirect:/product/getAll";
   }
 
-  @Secured("ROLE_USER")
+  @Secured({"ROLE_USER", "ROLE_ADMIN"})
   @PostMapping("/{id}/buy")
-  public String buyProduct(@PathVariable("id") int id){
-    User user = userService.getAuthenticatedUser();
-    Purchase newPurchase = new Purchase();
-    newPurchase.setUser(user);
-    newPurchase.setProduct(productService.getProduct(id));
-    purchaseService.savePurchase(newPurchase);
+  public String buyProduct(@PathVariable("id") int id) {
+    userService.makePurchase(id);
     return "redirect:/product/{id}";
   }
 }

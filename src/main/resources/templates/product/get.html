@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <title>Product</title>
@@ -13,7 +13,7 @@
     <input type="submit" value="buy"/>
 </form>
 
-<form th:method="PATCH" th:action="@{/product/{id}/edit(id=${product.getId()})}">
+<form th:method="GET" th:action="@{/product/{id}/edit(id=${product.getId()})}">
     <input type="submit" value="Edit"/>
 </form>
 

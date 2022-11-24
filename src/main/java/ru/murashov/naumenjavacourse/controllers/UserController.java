@@ -68,7 +68,7 @@ public class UserController {
   public String getUserProfile(Model model) {
     User user = userService.getAuthenticatedUser();
     model.addAttribute("user", user);
-    model.addAttribute("AllPurchases", purchaseService.getAllPurchasesByUser(user));
+    model.addAttribute("allPurchases", purchaseService.getAllPurchasesByUser(user));
     return "user/personalPage";
   }
 
