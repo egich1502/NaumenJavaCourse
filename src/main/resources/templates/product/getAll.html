@@ -11,5 +11,11 @@
 <form th:method="GET" th:action="@{/product/save}">
     <input th:type="submit" value="add"/>
 </form>
+<form th:method="GET" th:action="@{/product/filter/1}">
+    <input th:type="submit" value="filter up">
+</form>
+<form th:method="GET" th:action="@{/product/filter/-1}">
+    <input th:type="submit" value="filter down">
+</form>
 </body>
 </html>

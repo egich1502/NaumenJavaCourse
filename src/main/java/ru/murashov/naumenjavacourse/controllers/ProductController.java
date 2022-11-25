@@ -15,6 +15,10 @@ import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.services.ProductService;
 import ru.murashov.naumenjavacourse.services.UserService;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 @Controller
 @RequestMapping("product")
 public class ProductController {
@@ -81,5 +85,14 @@ public class ProductController {
   public String buyProduct(@PathVariable("id") int id) {
     userService.makePurchase(id);
     return "redirect:/product/{id}";
+  }
+
+  @GetMapping("/filter/{key}")
+  public String filterProduct(@PathVariable("key") int key, Model model){
+    List<Product> allProducts = productService.getAllProducts();
+    if (key == -1) Collections.sort(allProducts, Collections.reverseOrder());
+    else Collections.sort(allProducts);
+    model.addAttribute("allProducts", allProducts);
+    return "/product/getAll";
   }
 }
