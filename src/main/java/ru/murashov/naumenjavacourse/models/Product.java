@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product {
+public class Product implements Comparable{
 
   @GeneratedValue
   @Id
@@ -58,5 +58,13 @@ public class Product {
   @Override
   public int hashCode() {
     return Objects.hash(id, name, price, description, producer, category);
+  }
+
+  @Override
+  public int compareTo(Object o) {
+    Product product = (Product) o;
+    if(this.price < product.price) return 1;
+    if(this.price > product.price) return -1;
+    return 0;
   }
 }
