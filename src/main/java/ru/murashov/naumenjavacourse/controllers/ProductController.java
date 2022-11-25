@@ -13,16 +13,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.services.ProductService;
+import ru.murashov.naumenjavacourse.services.UserService;
 
 @Controller
 @RequestMapping("product")
 public class ProductController {
 
   private final ProductService productService;
+  private final UserService userService;
+
 
   @Autowired
-  public ProductController(ProductService productService) {
+  public ProductController(ProductService productService, UserService userService) {
     this.productService = productService;
+    this.userService = userService;
   }
 
   @Secured("ROLE_ADMIN")
@@ -54,7 +58,7 @@ public class ProductController {
   @GetMapping("{id}/edit")
   public String editProduct(@PathVariable("id") int id, Model model) {
     model.addAttribute("product", productService.getProduct(id));
-    return "/product/edit";
+    return "product/edit";
   }
 
   @Secured("ROLE_ADMIN")
@@ -70,5 +74,12 @@ public class ProductController {
   public String deleteProduct(@PathVariable("id") int id) {
     productService.deleteProduct(id);
     return "redirect:/product/getAll";
+  }
+
+  @Secured({"ROLE_USER", "ROLE_ADMIN"})
+  @PostMapping("/{id}/buy")
+  public String buyProduct(@PathVariable("id") int id) {
+    userService.makePurchase(id);
+    return "redirect:/product/{id}";
   }
 }

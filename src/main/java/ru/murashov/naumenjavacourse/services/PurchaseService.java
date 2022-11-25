@@ -38,7 +38,7 @@ public class PurchaseService {
     purchaseRepository.deleteById(id);
   }
 
-  public List<Purchase> getAllPurchasesByUser(User user){
+  public List<Purchase> getAllPurchasesByUser(User user) {
     return purchaseRepository.findAllByUser(user);
   }
 }
