@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.murashov.naumenjavacourse.models.Discoverys;
 import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.models.Purchase;
 import ru.murashov.naumenjavacourse.models.User;
@@ -53,7 +54,10 @@ public class ProductController {
 
   @GetMapping("getAll")
   public String getAllProducts(Model model) {
-    model.addAttribute("allProducts", productService.getAllProducts());
+    Discoverys discoverys = new Discoverys();
+    discoverys.setMax(99999);
+    discoverys.setMin(0);
+    model.addAttribute("allProducts", productService.getAllProducts(discoverys));
     return "product/getAll";
   }
 
@@ -97,11 +101,14 @@ public class ProductController {
   }
 
   @GetMapping("/filter/{key}")
-  public String filterProduct(@PathVariable("key") int key, Model model){
-    List<Product> allProducts = productService.getAllProducts();
+  public String filterProduct(@PathVariable("key") int key, Model model,
+                              @ModelAttribute("Discoverys")Discoverys discoverys){
+    List<Product> allProducts = productService.getAllProducts(discoverys);
     if (key == -1) Collections.sort(allProducts, Collections.reverseOrder());
     else Collections.sort(allProducts);
     model.addAttribute("allProducts", allProducts);
     return "/product/getAll";
   }
+
+
 }

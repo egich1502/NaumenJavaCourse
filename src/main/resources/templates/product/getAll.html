@@ -12,10 +12,13 @@
     <input th:type="submit" value="add"/>
 </form>
 <form th:method="GET" th:action="@{/product/filter/1}">
+    <div><label> min price: <input type="number" name="min" value="0"/> </label></div>
+    <div><label> max price: <input type="number" name="max" value="99999"/> </label></div>
     <input th:type="submit" value="filter up">
 </form>
 <form th:method="GET" th:action="@{/product/filter/-1}">
     <input th:type="submit" value="filter down">
 </form>
+
 </body>
 </html>
