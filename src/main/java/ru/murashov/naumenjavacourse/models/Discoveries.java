@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Discoverys {
+public class Discoveries {
     private int min;
     private int max;
 }

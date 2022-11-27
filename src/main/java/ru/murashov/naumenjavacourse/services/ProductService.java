@@ -2,7 +2,7 @@ package ru.murashov.naumenjavacourse.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.murashov.naumenjavacourse.models.Discoverys;
+import ru.murashov.naumenjavacourse.models.Discoveries;
 import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.repositories.ProductRepository;
 
@@ -23,12 +23,12 @@ public class ProductService {
     productRepository.save(product);
   }
 
-  public List<Product> getAllProducts(Discoverys discoverys) {
+  public List<Product> getAllProducts(Discoveries discoveries) {
     List<Product> products = new ArrayList<>();
     productRepository.findAll().forEach(products::add);
     products = products.stream().filter(element ->
-            element.getPrice() >= discoverys.getMin() &&
-                    element.getPrice() <= discoverys.getMax()).toList();
+            element.getPrice() >= discoveries.getMin() &&
+                    element.getPrice() <= discoveries.getMax()).toList();
     return products;
   }
 

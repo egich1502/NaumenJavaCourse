@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.murashov.naumenjavacourse.models.Discoverys;
+import ru.murashov.naumenjavacourse.models.Discoveries;
 import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.models.Purchase;
 import ru.murashov.naumenjavacourse.models.User;
@@ -19,7 +19,6 @@ import ru.murashov.naumenjavacourse.services.ProductService;
 import ru.murashov.naumenjavacourse.services.PurchaseService;
 import ru.murashov.naumenjavacourse.services.UserService;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,7 +32,8 @@ public class ProductController {
 
 
   @Autowired
-  public ProductController(ProductService productService, PurchaseService purchaseService, UserService userService) {
+  public ProductController(ProductService productService, PurchaseService purchaseService,
+      UserService userService) {
     this.productService = productService;
     this.purchaseService = purchaseService;
     this.userService = userService;
@@ -54,10 +54,10 @@ public class ProductController {
 
   @GetMapping("getAll")
   public String getAllProducts(Model model) {
-    Discoverys discoverys = new Discoverys();
-    discoverys.setMax(99999);
-    discoverys.setMin(0);
-    model.addAttribute("allProducts", productService.getAllProducts(discoverys));
+    Discoveries discoveries = new Discoveries();
+    discoveries.setMax(99999);
+    discoveries.setMin(0);
+    model.addAttribute("allProducts", productService.getAllProducts(discoveries));
     return "product/getAll";
   }
 
@@ -91,7 +91,7 @@ public class ProductController {
 
   @Secured("ROLE_USER")
   @PostMapping("/{id}/buy")
-  public String buyProduct(@PathVariable("id") int id){
+  public String buyProduct(@PathVariable("id") int id) {
     User user = userService.getAuthenticatedUser();
     Purchase newPurchase = new Purchase();
     newPurchase.setUser(user);
@@ -100,15 +100,17 @@ public class ProductController {
     return "redirect:/product/{id}";
   }
 
-  @GetMapping("/filter/{key}")
+  @PostMapping("/filter/{key}")
   public String filterProduct(@PathVariable("key") int key, Model model,
-                              @ModelAttribute("Discoverys")Discoverys discoverys){
-    List<Product> allProducts = productService.getAllProducts(discoverys);
-    if (key == -1) Collections.sort(allProducts, Collections.reverseOrder());
-    else Collections.sort(allProducts);
+      @ModelAttribute("Discoveries") Discoveries discoveries) {
+    List<Product> allProducts = productService.getAllProducts(discoveries);
+    if (key == -1) {
+      allProducts.sort(Collections.reverseOrder());
+    } else {
+      allProducts = allProducts.stream().sorted().toList();
+    }
     model.addAttribute("allProducts", allProducts);
     return "/product/getAll";
   }
-
 
 }

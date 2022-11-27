@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Get All Products</title>
@@ -11,7 +11,7 @@
 <form th:method="GET" th:action="@{/product/save}">
     <input th:type="submit" value="add"/>
 </form>
-<form th:method="GET" th:action="@{/product/filter/1}">
+<form th:method="POST" th:action="@{/product/filter/1}">
     <div><label> min price: <input type="number" name="min" value="0"/> </label></div>
     <div><label> max price: <input type="number" name="max" value="99999"/> </label></div>
     <input th:type="submit" value="filter up">
