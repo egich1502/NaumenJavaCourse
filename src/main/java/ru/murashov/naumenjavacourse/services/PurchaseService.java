@@ -13,14 +13,23 @@ import java.util.List;
 public class PurchaseService {
 
   private final PurchaseRepository purchaseRepository;
+  private final UserService userService;
+  private final ProductService productService;
 
   @Autowired
-  public PurchaseService(PurchaseRepository purchaseRepository) {
+  public PurchaseService(PurchaseRepository purchaseRepository,
+                         UserService userService, ProductService productService) {
     this.purchaseRepository = purchaseRepository;
+    this.userService = userService;
+    this.productService = productService;
   }
 
-  public void savePurchase(Purchase purchase) {
-    purchaseRepository.save(purchase);
+  public void savePurchase(int productId) {
+    User user = userService.getAuthenticatedUser();
+    Purchase newPurchase = new Purchase();
+    newPurchase.setUser(user);
+    newPurchase.setProduct(productService.getProduct(productId));
+    purchaseRepository.save(newPurchase);
   }
 
   public List<Purchase> getAllPurchase() {

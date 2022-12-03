@@ -33,7 +33,7 @@ public class PurchaseController {
   @Secured("ROLE_ADMIN")
   @PostMapping("save")
   public String savePurchase(@ModelAttribute("purchase") Purchase purchase) {
-    purchaseService.savePurchase(purchase);
+    purchaseService.savePurchase(purchase.getId());
     return "redirect:/purchase/getAll";
   }
 

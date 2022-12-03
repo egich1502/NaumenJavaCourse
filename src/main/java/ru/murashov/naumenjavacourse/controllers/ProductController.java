@@ -91,12 +91,8 @@ public class ProductController {
 
   @Secured("ROLE_USER")
   @PostMapping("/{id}/buy")
-  public String buyProduct(@PathVariable("id") int id) {
-    User user = userService.getAuthenticatedUser();
-    Purchase newPurchase = new Purchase();
-    newPurchase.setUser(user);
-    newPurchase.setProduct(productService.getProduct(id));
-    purchaseService.savePurchase(newPurchase);
+  public String buyProduct(@PathVariable("id") int productId) {
+    purchaseService.savePurchase(productId);
     return "redirect:/product/{id}";
   }
 
