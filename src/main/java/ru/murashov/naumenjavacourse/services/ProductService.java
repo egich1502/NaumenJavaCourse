@@ -7,6 +7,7 @@ import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.repositories.ProductRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -47,5 +48,14 @@ public class ProductService {
 
   public void deleteProduct(int id) {
     productRepository.deleteById(id);
+  }
+
+  public List<Product> getSortProduct(int key, Discoveries discoveries){
+    List<Product> allProducts = getAllProducts(discoveries);
+    if (key == -1)
+      allProducts.sort(Collections.reverseOrder());
+    else
+      allProducts = allProducts.stream().sorted().toList();
+    return allProducts;
   }
 }

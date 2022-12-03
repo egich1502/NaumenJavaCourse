@@ -103,14 +103,8 @@ public class ProductController {
   @PostMapping("/filter/{key}")
   public String filterProduct(@PathVariable("key") int key, Model model,
       @ModelAttribute("Discoveries") Discoveries discoveries) {
-    List<Product> allProducts = productService.getAllProducts(discoveries);
-    if (key == -1) {
-      allProducts.sort(Collections.reverseOrder());
-    } else {
-      allProducts = allProducts.stream().sorted().toList();
-    }
+    List<Product> allProducts = productService.getSortProduct(key, discoveries);
     model.addAttribute("allProducts", allProducts);
     return "/product/getAll";
   }
-
 }
