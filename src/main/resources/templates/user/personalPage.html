@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h3>Имя пользователя</h3><p th:text="${user.getUsername()}">VALUE</p>
+<h3>роль</h3><p th:text="${user.getRole()}">VALUE</p>
+
+<h2>Купленные товары</h2>
+
+<div th:each="purchase: ${allPurchases}">
+  <a th:href="@{/product/{id}(id=${purchase.getProduct().getId()})}" th:text="${purchase.getProduct().getName()}">VALUE</a>
+</div>
+
+</body>
+</html>

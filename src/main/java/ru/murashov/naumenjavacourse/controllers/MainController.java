@@ -9,13 +9,19 @@ import ru.murashov.naumenjavacourse.models.User;
 import ru.murashov.naumenjavacourse.services.UserService;
 
 @Controller
-public class RegistrationController {
+public class MainController {
 
   private final UserService userService;
 
   @Autowired
-  public RegistrationController(UserService userService) {
+  public MainController(UserService userService) {
     this.userService = userService;
+  }
+
+  @GetMapping("")
+  public String getMainPage(Model model) {
+    model.addAttribute("user", userService.getAuthenticatedUser());
+    return "mainPage";
   }
 
   @GetMapping("/registration")

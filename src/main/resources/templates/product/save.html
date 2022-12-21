@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="ru">
 <head>
     <title>Add product</title>
 </head>
 <body>
-<form th:action="@{/product/save}" method="post">
+<form th:action="@{/product/save}" method="POST">
    <div><label> Product Name : <input type="text" name="name"/> </label></div>
-    <div><label> Product Category id : <input type="number" name="categoryId"/> </label></div>
+    <div><label> Product Category id : <input type="number" name="category"/> </label></div>
     <div><label> Product Description : <input type="text" name="description"/> </label></div>
     <div><label> Product Price : <input type="number" name="price"/> </label></div>
-    <div><label> Product Producer id : <input type="number" name="producerId"/> </label></div>
+    <div><label> Product Producer id : <input type="number" name="producer"/> </label></div>
     <div><input type="submit" value="Add"/></div>
 </form>
 </body>

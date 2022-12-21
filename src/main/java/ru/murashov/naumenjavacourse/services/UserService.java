@@ -1,16 +1,21 @@
 package ru.murashov.naumenjavacourse.services;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.murashov.naumenjavacourse.models.Purchase;
 import ru.murashov.naumenjavacourse.models.Role;
 import ru.murashov.naumenjavacourse.models.User;
 import ru.murashov.naumenjavacourse.repositories.UserRepository;
@@ -19,10 +24,16 @@ import ru.murashov.naumenjavacourse.repositories.UserRepository;
 public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
+  private final ProductService productService;
+  private final PurchaseService purchaseService;
+  private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
   @Autowired
-  public UserService(UserRepository userRepository) {
+  public UserService(UserRepository userRepository, ProductService productService,
+      PurchaseService purchaseService) {
     this.userRepository = userRepository;
+    this.productService = productService;
+    this.purchaseService = purchaseService;
   }
 
   @Override
@@ -38,12 +49,48 @@ public class UserService implements UserDetailsService {
   }
 
   public void addUser(User user) throws Exception {
-    User userFromDB = userRepository.findByLogin(user.getUsername());
+    User userFromDB = userRepository.findByLogin(user.getLogin());
     if (userFromDB != null) {
       throw new Exception("user Exist");
     }
     user.setRole(Collections.singleton(Role.USER));
+    user.setPassword(encoder.encode(user.getPassword()));
     userRepository.save(user);
+  }
+
+  public List<User> getAllUsers() {
+    List<User> users = new ArrayList<>();
+    userRepository.findAll().forEach(users::add);
+    return users;
+  }
+
+  public User getUserById(int id) {
+    return userRepository.findById(id).get();
+  }
+
+  public void updateUserRole(int id, User user) {
+    User userToBeUpdated = userRepository.findById(id).get();
+    userToBeUpdated.setRole(user.getRole()
+    );
+    userRepository.save(userToBeUpdated);
+  }
+
+  public User getAuthenticatedUser() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String currentUser = auth.getName();
+    return userRepository.findByUsername(currentUser);
+  }
+
+  public void makePurchase(int id) {
+    User user = getAuthenticatedUser();
+    Purchase newPurchase = new Purchase();
+    newPurchase.setUser(user);
+    newPurchase.setProduct(productService.getProduct(id));
+    purchaseService.savePurchase(newPurchase);
+  }
+
+  public void deleteUser(int id) {
+    userRepository.deleteById(id);
   }
 
 }
