@@ -15,7 +15,6 @@ import ru.murashov.naumenjavacourse.models.Product;
 import ru.murashov.naumenjavacourse.services.ProductService;
 import ru.murashov.naumenjavacourse.services.UserService;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -88,10 +87,13 @@ public class ProductController {
   }
 
   @GetMapping("/filter/{key}")
-  public String filterProduct(@PathVariable("key") int key, Model model){
+  public String filterProduct(@PathVariable("key") int key, Model model) {
     List<Product> allProducts = productService.getAllProducts();
-    if (key == -1) Collections.sort(allProducts, Collections.reverseOrder());
-    else Collections.sort(allProducts);
+    if (key == -1) {
+      allProducts.sort(Collections.reverseOrder());
+    } else {
+      allProducts.sort(Product::compareTo);
+    }
     model.addAttribute("allProducts", allProducts);
     return "/product/getAll";
   }
