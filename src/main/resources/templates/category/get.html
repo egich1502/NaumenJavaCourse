@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Category</title>
 </head>
 <body>
 <p th:text="${category.getName()}">VALUE</p>
+<div th:each="product:${categoryProducts}">
+    <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}">VALUE</a>
+</div>
 
 <form th:method="DELETE" th:action="@{/category/delete/{id}(id=${category.getId()})}">
     <input type="submit" value="Delete"/>
